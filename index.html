@@ -13,9 +13,11 @@
       --text-light: #333;
       --text-dark: #f1f1f1;
     }
+
     * {
       margin: 0; padding: 0; box-sizing: border-box;
     }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--light);
@@ -23,6 +25,7 @@
       transition: background 0.4s ease, color 0.4s ease;
       line-height: 1.8;
     }
+
     body.dark {
       background: #1c1c1c;
       color: var(--text-dark);
@@ -40,21 +43,25 @@
       text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
       position: relative;
     }
+
     header::after {
       content: '';
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.3);
     }
+
     .hero-text {
       position: relative;
       z-index: 1;
       text-align: center;
     }
+
     .hero-text h1 {
       font-size: 3rem;
       margin-bottom: 10px;
     }
+
     .hero-text p {
       font-size: 1.3rem;
       font-weight: 300;
@@ -70,12 +77,15 @@
       padding: 12px 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       z-index: 100;
+      flex-wrap: wrap;
     }
+
     nav ul {
       list-style: none;
       display: flex;
       gap: 25px;
     }
+
     nav ul li a {
       color: white;
       text-decoration: none;
@@ -83,12 +93,20 @@
       font-size: 1rem;
       transition: color 0.3s;
     }
+
     nav ul li a:hover,
     nav ul li a.active {
       color: var(--accent);
     }
 
-    /* Language dropdown in navbar */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Language dropdown */
     .language-dropdown {
       position: relative;
       font-size: 0.95rem;
@@ -99,12 +117,14 @@
       align-items: center;
       gap: 8px;
     }
+
     .language-dropdown img {
       width: 24px;
       height: 16px;
       border-radius: 2px;
       object-fit: cover;
     }
+
     .language-options {
       position: absolute;
       top: 130%;
@@ -119,9 +139,11 @@
       overflow: hidden;
       z-index: 200;
     }
+
     .language-options.show {
       display: flex;
     }
+
     .language-options div {
       padding: 8px 12px;
       cursor: pointer;
@@ -130,12 +152,12 @@
       gap: 8px;
       transition: background 0.2s;
     }
+
     .language-options div:hover {
       background: var(--accent);
       color: white;
     }
 
-    /* Mode toggle button */
     .mode-toggle {
       background: white;
       border: none;
@@ -148,17 +170,21 @@
       align-items: center;
       justify-content: center;
     }
+
     .mode-toggle:hover {
       background: var(--accent);
     }
+
     .mode-toggle svg {
       stroke: var(--primary);
       width: 24px;
       height: 24px;
     }
+
     body.dark .mode-toggle {
       background: #333;
     }
+
     body.dark .mode-toggle svg {
       stroke: #fff;
     }
@@ -178,6 +204,7 @@
       margin-top: 50px;
       font-size: 0.9rem;
     }
+
     body.dark footer {
       background: #111;
     }
@@ -185,23 +212,57 @@
     body.dark nav {
       background: #111;
     }
+
     body.dark nav ul li a {
       color: #ddd;
     }
+
     body.dark nav ul li a:hover,
     body.dark nav ul li a.active {
       color: var(--accent);
     }
 
-    @media (max-width: 600px) {
+    /* Responsive Enhancements */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--primary);
+        padding: 10px 0;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
       .hero-text h1 {
         font-size: 2rem;
       }
-      nav ul {
-        gap: 15px;
+
+      .hero-text p {
+        font-size: 1rem;
       }
+    }
+
+    @media (max-width: 600px) {
+      .language-dropdown {
+        font-size: 0.85rem;
+      }
+
       .language-options {
-        min-width: 100px;
+        left: 0;
+        right: auto;
+        min-width: 100%;
+      }
+
+      header {
+        height: 60vh;
+        padding: 20px;
       }
     }
   </style>
@@ -209,6 +270,14 @@
 <body>
 
   <nav>
+    <button id="nav-toggle" aria-label="Toggle navigation" class="nav-toggle">
+      <svg viewBox="0 0 100 80" width="24" height="24" fill="white">
+        <rect width="100" height="10"></rect>
+        <rect y="30" width="100" height="10"></rect>
+        <rect y="60" width="100" height="10"></rect>
+      </svg>
+    </button>
+
     <ul>
       <li><a href="index.html" id="nav-home" class="active">Начало</a></li>
       <li><a href="about.html" id="nav-about">За къщата</a></li>
@@ -254,20 +323,15 @@
   </footer>
 
 <script>
-  // Режим: старт - светъл, може да се сменя и запазва
   const darkModeKey = 'darkModeEnabled';
   const langKey = 'selectedLanguage';
-
   const body = document.body;
   const modeToggleBtn = document.getElementById('mode-toggle-btn');
 
   function loadDarkMode() {
     const saved = localStorage.getItem(darkModeKey);
-    if (saved === 'true') {
-      body.classList.add('dark');
-    } else {
-      body.classList.remove('dark');
-    }
+    if (saved === 'true') body.classList.add('dark');
+    else body.classList.remove('dark');
   }
 
   modeToggleBtn.addEventListener('click', () => {
@@ -277,7 +341,6 @@
 
   loadDarkMode();
 
-  // Преводи (за всички елементи в тази страница)
   const translations = {
     bg: {
       title: "Начало | Ахелой",
@@ -311,7 +374,6 @@
     }
   };
 
-  // Language Dropdown Elements
   const langDropdown = document.getElementById('language-dropdown');
   const langOptions = document.getElementById('language-options');
   const selectedFlag = document.getElementById('selected-flag');
@@ -319,26 +381,16 @@
 
   function setLanguage(lang) {
     if (!translations[lang]) lang = 'bg';
-
     localStorage.setItem(langKey, lang);
-
-    // Update page title
     document.title = translations[lang].title;
-
-    // Update nav texts
     document.getElementById('nav-home').textContent = translations[lang].navHome;
     document.getElementById('nav-about').textContent = translations[lang].navAbout;
     document.getElementById('nav-gallery').textContent = translations[lang].navGallery;
     document.getElementById('nav-contact').textContent = translations[lang].navContact;
-
-    // Hero text
     document.getElementById('hero-title').textContent = translations[lang].heroTitle;
     document.getElementById('hero-subtitle').textContent = translations[lang].heroSubtitle;
-
-    // Main text
     document.getElementById('main-text').textContent = translations[lang].mainText;
 
-    // Update dropdown selected language and flag
     switch(lang) {
       case 'bg':
         selectedFlag.src = "https://flagcdn.com/w20/bg.png";
@@ -358,18 +410,15 @@
     }
   }
 
-  // Load saved language or default to Bulgarian
   const savedLang = localStorage.getItem(langKey) || 'bg';
   setLanguage(savedLang);
 
-  // Dropdown toggle logic
   langDropdown.addEventListener('click', () => {
     const expanded = langDropdown.getAttribute('aria-expanded') === 'true';
     langDropdown.setAttribute('aria-expanded', !expanded);
     langOptions.classList.toggle('show');
   });
 
-  // Language option click handler
   langOptions.querySelectorAll('div').forEach(option => {
     option.addEventListener('click', () => {
       const lang = option.getAttribute('data-lang');
@@ -379,7 +428,6 @@
     });
   });
 
-  // Close language dropdown if clicked outside
   document.addEventListener('click', (e) => {
     if (!langDropdown.contains(e.target)) {
       langDropdown.setAttribute('aria-expanded', 'false');
@@ -387,13 +435,17 @@
     }
   });
 
-  // Keyboard accessibility for language dropdown
   langDropdown.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       langDropdown.setAttribute('aria-expanded', 'false');
       langOptions.classList.remove('show');
       langDropdown.blur();
     }
+  });
+
+  // Hamburger toggle
+  document.getElementById('nav-toggle').addEventListener('click', () => {
+    document.querySelector('nav ul').classList.toggle('show');
   });
 </script>
 
