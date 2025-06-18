@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <title>Начало | Ахелой</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary: #006d77;
+      --accent: #83c5be;
+      --light: #edf6f9;
+      --dark: #023047;
+      --text-light: #333;
+      --text-dark: #f1f1f1;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
+      color: var(--text-light);
+      transition: background 0.4s ease, color 0.4s ease;
+      line-height: 1.8;
+    }
+    body.dark {
+      background: #1c1c1c;
+      color: var(--text-dark);
+    }
+
+    header {
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWVzdGhldGljJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D');
+      background-size: cover;
+      background-position: center;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .hero-text {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    .hero-text p {
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: var(--accent);
+    }
+
+    /* Language dropdown in navbar */
+    .language-dropdown {
+      position: relative;
+      font-size: 0.95rem;
+      user-select: none;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .language-dropdown img {
+      width: 24px;
+      height: 16px;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+    .language-options {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      background: white;
+      color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      min-width: 120px;
+      overflow: hidden;
+      z-index: 200;
+    }
+    .language-options.show {
+      display: flex;
+    }
+    .language-options div {
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .language-options div:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Mode toggle button */
+    .mode-toggle {
+      background: white;
+      border: none;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-toggle:hover {
+      background: var(--accent);
+    }
+    .mode-toggle svg {
+      stroke: var(--primary);
+      width: 24px;
+      height: 24px;
+    }
+    body.dark .mode-toggle {
+      background: #333;
+    }
+    body.dark .mode-toggle svg {
+      stroke: #fff;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 15px;
+      text-align: center;
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+    body.dark footer {
+      background: #111;
+    }
+
+    body.dark nav {
+      background: #111;
+    }
+    body.dark nav ul li a {
+      color: #ddd;
+    }
+    body.dark nav ul li a:hover,
+    body.dark nav ul li a.active {
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      .language-options {
+        min-width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html" id="nav-home" class="active">Начало</a></li>
+      <li><a href="about.html" id="nav-about">За къщата</a></li>
+      <li><a href="gallery.html" id="nav-gallery">Галерия</a></li>
+      <li><a href="contact.html" id="nav-contact">Контакти</a></li>
+    </ul>
+
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="language-dropdown" id="language-dropdown" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Избор на език">
+        <img src="https://flagcdn.com/w20/bg.png" alt="Български флаг" id="selected-flag" />
+        <span id="selected-lang">Български</span>
+        <svg style="margin-left:4px;" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="language-options" id="language-options" role="listbox" tabindex="-1">
+          <div data-lang="bg" role="option" aria-selected="true"><img src="https://flagcdn.com/w20/bg.png" alt="Български флаг" /> Български</div>
+          <div data-lang="en" role="option" aria-selected="false"><img src="https://flagcdn.com/w20/gb.png" alt="English flag" /> English</div>
+          <div data-lang="ru" role="option" aria-selected="false"><img src="https://flagcdn.com/w20/ru.png" alt="Русский флаг" /> Русский</div>
+        </div>
+      </div>
+
+      <button class="mode-toggle" aria-label="Смени режим" id="mode-toggle-btn" title="Смени режим">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero-text">
+      <h1 id="hero-title">Добре дошли в Къща за гости Ахелой</h1>
+      <p id="hero-subtitle">Вашият уютен дом край морето</p>
+    </div>
+  </header>
+
+  <main>
+    <p id="main-text">Заповядайте при нас и се насладете на прекрасна почивка на брега на Черно море.</p>
+  </main>
+
+  <footer>
+    &copy; 2025 Къща за гости Ахелой | Всички права запазени
+  </footer>
+
+<script>
+  // Режим: старт - светъл, може да се сменя и запазва
+  const darkModeKey = 'darkModeEnabled';
+  const langKey = 'selectedLanguage';
+
+  const body = document.body;
+  const modeToggleBtn = document.getElementById('mode-toggle-btn');
+
+  function loadDarkMode() {
+    const saved = localStorage.getItem(darkModeKey);
+    if (saved === 'true') {
+      body.classList.add('dark');
+    } else {
+      body.classList.remove('dark');
+    }
+  }
+
+  modeToggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem(darkModeKey, body.classList.contains('dark'));
+  });
+
+  loadDarkMode();
+
+  // Преводи (за всички елементи в тази страница)
+  const translations = {
+    bg: {
+      title: "Начало | Ахелой",
+      navHome: "Начало",
+      navAbout: "За къщата",
+      navGallery: "Галерия",
+      navContact: "Контакти",
+      heroTitle: "Добре дошли в Къща за гости Ахелой",
+      heroSubtitle: "Вашият уютен дом край морето",
+      mainText: "Заповядайте при нас и се насладете на прекрасна почивка на брега на Черно море."
+    },
+    en: {
+      title: "Home | Aheloy",
+      navHome: "Home",
+      navAbout: "About",
+      navGallery: "Gallery",
+      navContact: "Contact",
+      heroTitle: "Welcome to Aheloy Guesthouse",
+      heroSubtitle: "Your cozy home by the sea",
+      mainText: "Welcome to enjoy a wonderful vacation by the Black Sea."
+    },
+    ru: {
+      title: "Главная | Ахелой",
+      navHome: "Главная",
+      navAbout: "О доме",
+      navGallery: "Галерея",
+      navContact: "Контакты",
+      heroTitle: "Добро пожаловать в гостевой дом Ахелой",
+      heroSubtitle: "Ваш уютный дом у моря",
+      mainText: "Добро пожаловать на прекрасный отдых на берегу Черного моря."
+    }
+  };
+
+  // Language Dropdown Elements
+  const langDropdown = document.getElementById('language-dropdown');
+  const langOptions = document.getElementById('language-options');
+  const selectedFlag = document.getElementById('selected-flag');
+  const selectedLang = document.getElementById('selected-lang');
+
+  function setLanguage(lang) {
+    if (!translations[lang]) lang = 'bg';
+
+    localStorage.setItem(langKey, lang);
+
+    // Update page title
+    document.title = translations[lang].title;
+
+    // Update nav texts
+    document.getElementById('nav-home').textContent = translations[lang].navHome;
+    document.getElementById('nav-about').textContent = translations[lang].navAbout;
+    document.getElementById('nav-gallery').textContent = translations[lang].navGallery;
+    document.getElementById('nav-contact').textContent = translations[lang].navContact;
+
+    // Hero text
+    document.getElementById('hero-title').textContent = translations[lang].heroTitle;
+    document.getElementById('hero-subtitle').textContent = translations[lang].heroSubtitle;
+
+    // Main text
+    document.getElementById('main-text').textContent = translations[lang].mainText;
+
+    // Update dropdown selected language and flag
+    switch(lang) {
+      case 'bg':
+        selectedFlag.src = "https://flagcdn.com/w20/bg.png";
+        selectedFlag.alt = "Български флаг";
+        selectedLang.textContent = "Български";
+        break;
+      case 'en':
+        selectedFlag.src = "https://flagcdn.com/w20/gb.png";
+        selectedFlag.alt = "English flag";
+        selectedLang.textContent = "English";
+        break;
+      case 'ru':
+        selectedFlag.src = "https://flagcdn.com/w20/ru.png";
+        selectedFlag.alt = "Русский флаг";
+        selectedLang.textContent = "Русский";
+        break;
+    }
+  }
+
+  // Load saved language or default to Bulgarian
+  const savedLang = localStorage.getItem(langKey) || 'bg';
+  setLanguage(savedLang);
+
+  // Dropdown toggle logic
+  langDropdown.addEventListener('click', () => {
+    const expanded = langDropdown.getAttribute('aria-expanded') === 'true';
+    langDropdown.setAttribute('aria-expanded', !expanded);
+    langOptions.classList.toggle('show');
+  });
+
+  // Language option click handler
+  langOptions.querySelectorAll('div').forEach(option => {
+    option.addEventListener('click', () => {
+      const lang = option.getAttribute('data-lang');
+      setLanguage(lang);
+      langDropdown.setAttribute('aria-expanded', 'false');
+      langOptions.classList.remove('show');
+    });
+  });
+
+  // Close language dropdown if clicked outside
+  document.addEventListener('click', (e) => {
+    if (!langDropdown.contains(e.target)) {
+      langDropdown.setAttribute('aria-expanded', 'false');
+      langOptions.classList.remove('show');
+    }
+  });
+
+  // Keyboard accessibility for language dropdown
+  langDropdown.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      langDropdown.setAttribute('aria-expanded', 'false');
+      langOptions.classList.remove('show');
+      langDropdown.blur();
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <title data-lang-key="title">Контакти | Ахелой</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary: #1a535c;
+      --accent: #4ecdc4;
+      --light: #f7fff7;
+      --dark: #292f36;
+      --highlight: #ff6b6b;
+      --text-light: #333;
+      --text-dark: #f1f1f1;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
+      color: var(--text-light);
+      transition: background 0.4s ease, color 0.4s ease;
+      line-height: 1.8;
+    }
+    body.dark {
+      background: #1a1a1a;
+      color: var(--text-dark);
+    }
+
+    header {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?fm=jpg&q=60&w=3000');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+      position: relative;
+    }
+    .hero-text {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: var(--accent);
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Language dropdown in navbar */
+    .language-dropdown {
+      position: relative;
+      font-size: 0.95rem;
+      user-select: none;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .language-dropdown:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .language-dropdown img {
+      width: 24px;
+      height: 16px;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+    .language-options {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      background: white;
+      color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      min-width: 120px;
+      overflow: hidden;
+      z-index: 200;
+    }
+    .language-options.show {
+      display: flex;
+    }
+    .language-options div {
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .language-options div:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Mode toggle button */
+    .mode-toggle {
+      background: white;
+      border: none;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-toggle:hover {
+      background: var(--accent);
+      transform: scale(1.1);
+    }
+    .mode-toggle svg {
+      stroke: var(--primary);
+      width: 24px;
+      height: 24px;
+    }
+    body.dark .mode-toggle {
+      background: #333;
+    }
+    body.dark .mode-toggle svg {
+      stroke: #fff;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    body.dark .section {
+      background: #2b2b2b;
+    }
+
+    .section p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    .section a {
+      color: var(--primary);
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+    .section a:hover {
+      color: var(--highlight);
+      text-decoration: underline;
+    }
+    .section strong {
+      color: var(--primary);
+    }
+    body.dark .section strong {
+      color: var(--accent);
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 25px;
+      transition: all 0.3s ease;
+    }
+    iframe:hover {
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+    body.dark footer {
+      background: #1a1a1a;
+    }
+    body.dark nav {
+      background: var(--dark) !important;
+    }
+
+    @media (max-width: 600px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      nav ul {
+        gap: 10px;
+      }
+      .language-options {
+        min-width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html" id="nav-home">Начало</a></li>
+      <li><a href="about.html" id="nav-about">За къщата</a></li>
+      <li><a href="gallery.html" id="nav-gallery">Галерия</a></li>
+      <li><a href="contact.html" id="nav-contact" class="active">Контакти</a></li>
+    </ul>
+
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="language-dropdown" id="language-dropdown" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Избор на език">
+        <img src="https://flagcdn.com/w20/bg.png" alt="Български флаг" id="selected-flag" />
+        <span id="selected-lang">Български</span>
+        <svg style="margin-left:4px;" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="language-options" id="language-options" role="listbox" tabindex="-1">
+          <div data-lang="bg" role="option" aria-selected="true"><img src="https://flagcdn.com/w20/bg.png" alt="Български флаг" /> Български</div>
+          <div data-lang="en" role="option" aria-selected="false"><img src="https://flagcdn.com/w20/gb.png" alt="English flag" /> English</div>
+          <div data-lang="ru" role="option" aria-selected="false"><img src="https://flagcdn.com/w20/ru.png" alt="Русский флаг" /> Русский</div>
+        </div>
+      </div>
+
+      <button class="mode-toggle" aria-label="Смени режим" id="mode-toggle-btn" title="Смени режим">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero-text">
+      <h1 id="hero-title">Контакти</h1>
+    </div>
+  </header>
+
+  <div class="section">
+    <p><strong id="email-label">Имейл:</strong> <a href="mailto:magi_stojkova@abv.bg">magi_stojkova@abv.bg</a></p>
+    <p><strong id="phone-label">Телефон:</strong> <a href="tel:+359885123456">+359 888 414 562</a></p>
+    <p><strong id="address-label">Адрес:</strong> Емона 23</p>
+
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2905.907587098324!2d27.66951211563371!3d42.63049817914725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40a6997cb6d49f5f%3A0x5a3e79f366c9f56!2z0JrRg9C70LDRgdGC0L7QstCw0LzQvtC80LAsINCg0YHQutC-0YHRgtCw!5e0!3m2!1sbg!2sbg" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Карта към къщата за гости в Ахелой">
+    </iframe>
+
+    <p style="margin-top: 15px;">
+      <a href="https://maps.app.goo.gl/uFWu9Jna6Si1ALTaA" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-weight: 600; text-decoration: none;" id="map-link">
+        Виж мястото в Google Maps →
+      </a>
+    </p>
+  </div>
+
+  <footer>
+    &copy; 2025 Къща за гости Ахелой | Всички права запазени
+  </footer>
+
+  <script>
+    // Dark mode functionality
+    const darkModeKey = 'darkModeEnabled';
+    const langKey = 'selectedLanguage';
+
+    const body = document.body;
+    const modeToggleBtn = document.getElementById('mode-toggle-btn');
+
+    function loadDarkMode() {
+      const saved = localStorage.getItem(darkModeKey);
+      if (saved === 'true') {
+        body.classList.add('dark');
+      } else {
+        body.classList.remove('dark');
+      }
+    }
+
+    modeToggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      localStorage.setItem(darkModeKey, body.classList.contains('dark'));
+    });
+
+    loadDarkMode();
+
+    // Translations
+    const translations = {
+      bg: {
+        title: "Контакти | Ахелой",
+        navHome: "Начало",
+        navAbout: "За къщата",
+        navGallery: "Галерия",
+        navContact: "Контакти",
+        heroTitle: "Контакти",
+        emailLabel: "Имейл:",
+        phoneLabel: "Телефон:",
+        addressLabel: "Адрес:",
+        mapLink: "Виж мястото в Google Maps →"
+      },
+      en: {
+        title: "Contacts | Aheloy",
+        navHome: "Home",
+        navAbout: "About",
+        navGallery: "Gallery",
+        navContact: "Contact",
+        heroTitle: "Contacts",
+        emailLabel: "Email:",
+        phoneLabel: "Phone:",
+        addressLabel: "Address:",
+        mapLink: "View location on Google Maps →"
+      },
+      ru: {
+        title: "Контакты | Ахелой",
+        navHome: "Главная",
+        navAbout: "О доме",
+        navGallery: "Галерея",
+        navContact: "Контакты",
+        heroTitle: "Контакты",
+        emailLabel: "Эл. почта:",
+        phoneLabel: "Телефон:",
+        addressLabel: "Адрес:",
+        mapLink: "Посмотреть на Google Maps →"
+      }
+    };
+
+    // Language Dropdown Elements
+    const langDropdown = document.getElementById('language-dropdown');
+    const langOptions = document.getElementById('language-options');
+    const selectedFlag = document.getElementById('selected-flag');
+    const selectedLang = document.getElementById('selected-lang');
+
+    function setLanguage(lang) {
+      if (!translations[lang]) lang = 'bg';
+
+      localStorage.setItem(langKey, lang);
+
+      // Update page title
+      document.title = translations[lang].title;
+
+      // Update nav texts
+      document.getElementById('nav-home').textContent = translations[lang].navHome;
+      document.getElementById('nav-about').textContent = translations[lang].navAbout;
+      document.getElementById('nav-gallery').textContent = translations[lang].navGallery;
+      document.getElementById('nav-contact').textContent = translations[lang].navContact;
+
+      // Hero text
+      document.getElementById('hero-title').textContent = translations[lang].heroTitle;
+
+      // Contact labels
+      document.getElementById('email-label').textContent = translations[lang].emailLabel;
+      document.getElementById('phone-label').textContent = translations[lang].phoneLabel;
+      document.getElementById('address-label').textContent = translations[lang].addressLabel;
+      document.getElementById('map-link').textContent = translations[lang].mapLink;
+
+      // Update dropdown selected language and flag
+      switch(lang) {
+        case 'bg':
+          selectedFlag.src = "https://flagcdn.com/w20/bg.png";
+          selectedFlag.alt = "Български флаг";
+          selectedLang.textContent = "Български";
+          break;
+        case 'en':
+          selectedFlag.src = "https://flagcdn.com/w20/gb.png";
+          selectedFlag.alt = "English flag";
+          selectedLang.textContent = "English";
+          break;
+        case 'ru':
+          selectedFlag.src = "https://flagcdn.com/w20/ru.png";
+          selectedFlag.alt = "Русский флаг";
+          selectedLang.textContent = "Русский";
+          break;
+      }
+    }
+
+    // Load saved language or default to Bulgarian
+    const savedLang = localStorage.getItem(langKey) || 'bg';
+    setLanguage(savedLang);
+
+    // Dropdown toggle logic
+    langDropdown.addEventListener('click', () => {
+      const expanded = langDropdown.getAttribute('aria-expanded') === 'true';
+      langDropdown.setAttribute('aria-expanded', !expanded);
+      langOptions.classList.toggle('show');
+    });
+
+    // Language option click handler
+    langOptions.querySelectorAll('div').forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.getAttribute('data-lang');
+        setLanguage(lang);
+        langDropdown.setAttribute('aria-expanded', 'false');
+        langOptions.classList.remove('show');
+      });
+    });
+
+    // Close language dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!langDropdown.contains(e.target)) {
+        langDropdown.setAttribute('aria-expanded', 'false');
+        langOptions.classList.remove('show');
+      }
+    });
+
+    // Keyboard accessibility for language dropdown
+    langDropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        langDropdown.setAttribute('aria-expanded', 'false');
+        langOptions.classList.remove('show');
+        langDropdown.blur();
+      }
+    });
+  </script>
+</body>
+</html>
